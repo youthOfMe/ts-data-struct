@@ -32,6 +32,7 @@ class ArrayStack<T = any> implements IStack<T> {
   }
 }
 
+export default ArrayStack
 
 // 创建stack的实例
 const stack1 = new ArrayStack<string>()
