@@ -88,6 +88,86 @@ class BSTree<T> {
     return !!this.searchNode(value)
   }
 
+  /** 遍历的操作 */
+  /** 先序遍历 */
+  preOrderTraverse() {
+    this.preOrderTraverseNode(this.root)
+  }
+  private preOrderTraverseNode(node: TreeNode<T> | null) {
+    if (node) {
+      console.log(node.value)
+      this.preOrderTraverseNode(node.left)
+      this.preOrderTraverseNode(node.right)
+    }
+  }
+
+  /** 中序遍历 */
+  inOrderTraverse() {
+    this.inOrderTraverseNode(this.root)
+  }
+  private inOrderTraverseNode(node: TreeNode<T> | null) {
+    if (node) {
+      this.inOrderTraverseNode(node.left)
+      console.log(node.value)
+      this.inOrderTraverseNode(node.right)
+    }
+  }
+
+  /** 后序遍历 */
+  postOrderTraverse() {
+    this.postOrderTraverseNode(this.root)
+  }
+  private postOrderTraverseNode(node: TreeNode<T> | null) {
+    if (node) {
+      this.postOrderTraverseNode(node.left)
+      this.postOrderTraverseNode(node.right)
+      console.log(node.value)
+    }
+  }
+
+  /** 层序遍历 */
+  levelOrderTraverse() {
+    // 1. 如果没有根节点, 就不需要进行遍历
+    if (!this.root) return
+
+    // 2. 创建队列结构
+    const queue: TreeNode<T>[] = []
+    // 第一个节点是根节点
+    queue.push(this.root)
+
+    // 3. 遍历队列中的所有节点(依次出队)
+    while (queue.length) {
+      // 3.1 访问节点的过程
+      const current = queue.shift()
+      console.log(current?.value)
+
+      // 3.2 将左子节点加入到队列中
+      if (current?.left) {
+        queue.push(current.left)
+      }
+
+      // 3.3 将右子节点加入到队列中
+      if (current?.right) {
+        queue.push(current.right)
+      }
+    }
+  }
+
+  /** 获取最值的操作: 最大值/最小值 */
+  getMaxValue(): T | null {
+    let current = this.root
+    while (current && current.right) {
+      current = current.right
+    }
+    return current?.value ?? null
+  }
+  getMinValue(): T | null {
+    let current = this.root
+    while (current && current.left) {
+      current = current.left
+    }
+    return current?.value ?? null
+  }
 }
 
 const bst = new BSTree<number>()
@@ -106,5 +186,9 @@ bst.print()
 
 console.log(bst.search(19))
 console.log(bst.search(88))
+
+// bst.levelOrderTraverse()
+
+bst.preOrderTraverse()
 
 export { }
